@@ -64,3 +64,4 @@ C:\Users\boraa\Desktop\Masaüstü\BookWebAPI\OnlineBookStore\bin\Debug\net8.0\Sw
 C:\Users\boraa\Desktop\Masaüstü\BookWebAPI\OnlineBookStore\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\boraa\Desktop\Masaüstü\BookWebAPI\OnlineBookStore\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\boraa\Desktop\Masaüstü\BookWebAPI\OnlineBookStore\obj\Debug\net8.0\OnlineBookStore.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\boraa\Desktop\Masaüstü\BookWebAPI\OnlineBookStore\obj\Debug\net8.0\OnlineBookStore.sourcelink.json

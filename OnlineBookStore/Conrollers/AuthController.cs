@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using OnlineBookStore.Models;
 using OnlineBookStore.Services;
 using System.Threading.Tasks;
 
@@ -15,21 +16,22 @@ namespace OnlineBookStore.Controllers
             _authService = authService;
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        [HttpPost("register")]
+        public async Task<ActionResult<User>> Register(User user)
         {
-            var token = await _authService.Authenticate(loginDto.Username, loginDto.Password);
-
-            if (token == null)
-                return Unauthorized();
-
-            return Ok(new { Token = token });
+            var registeredUser = await _authService.RegisterUserAsync(user);
+            return Ok(registeredUser);
         }
-    }
 
-    public class LoginDto
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
+        [HttpPost("login")]
+        public async Task<ActionResult<string>> Login([FromBody] User user)
+        {
+            var token = await _authService.LoginUserAsync(user.Username, user.Password);
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+            return Ok(token);
+        }
     }
 }
