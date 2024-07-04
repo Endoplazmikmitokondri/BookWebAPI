@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OnlineBookStore.Models;
 using OnlineBookStore.Services;
+using OnlineBookStore.Dtos;
 using System.Threading.Tasks;
 
 namespace OnlineBookStore.Controllers
@@ -17,21 +18,32 @@ namespace OnlineBookStore.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(User user)
+        public async Task<IActionResult> Register([FromBody] UserDto user)
         {
-            var registeredUser = await _authService.RegisterUserAsync(user);
-            return Ok(registeredUser);
+            var result = await _authService.RegisterAsync(user);
+            if (!result.Success)
+            {
+                return BadRequest(new { result.Success, result.Message });
+            }
+            return Ok(new { result.Success, result.Message, result.Token });
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login([FromBody] User user)
+        public async Task<IActionResult> Login([FromBody] UserLoginDto user)
         {
-            var token = await _authService.LoginUserAsync(user.Username, user.Password);
-            if (token == null)
+            if (user == null)
             {
-                return Unauthorized();
+                return BadRequest("Invalid client request");
             }
-            return Ok(token);
+
+            var result = await _authService.LoginAsync(user);
+
+            if (!result.Success)
+            {
+                return Unauthorized(new { result.Success, result.Message });
+            }
+
+            return Ok(new { result.Success, result.Message, Token = result.Token });
         }
     }
 }
